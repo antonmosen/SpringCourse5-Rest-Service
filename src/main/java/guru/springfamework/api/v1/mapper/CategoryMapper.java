@@ -10,6 +10,7 @@ public interface CategoryMapper {
 
     CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
-    //@Mapping(source = "getId", target = "id") -> Not needed.
+    //@Mapping(source = "id", target = "id") //-> Not needed.
+    //@Mapping(source = "name", target = "name") // -> Not needed.
     CategoryDTO categoryToCategoryDTO(Category category);
 }
