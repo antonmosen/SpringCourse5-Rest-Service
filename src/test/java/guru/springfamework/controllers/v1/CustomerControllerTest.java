@@ -65,14 +65,16 @@ public class CustomerControllerTest {
     public void getCustomerById() throws Exception {
 
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setId(1L);
+        customerDTO.setFirstName("Tom");
+        customerDTO.setLastName("Cruise");
+        customerDTO.setCustomerUrl("/api/v1/customers/1");
 
-        when(customerService.getCustomerById("1")).thenReturn(customerDTO);
+        when(customerService.getCustomerById(1L)).thenReturn(customerDTO);
 
         mockMvc.perform(get(API_V1_CUSTOMER + "1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", equalTo(1)));
+                .andExpect(jsonPath("$.firstName", equalTo("Tom")));
     }
 
 }
