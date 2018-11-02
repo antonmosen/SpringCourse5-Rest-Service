@@ -18,9 +18,9 @@ import static org.mockito.Mockito.when;
 
 public class CategoryServiceImplTest {
 
-    public static final Long ID = 2L;
-    public static final String NAME = "Jimmy";
-    CategoryService categoryService;
+    private static final Long ID = 2L;
+    private static final String NAME = "Jimmy";
+    private CategoryService categoryService;
 
     @Mock
     CategoryRepository categoryRepository;

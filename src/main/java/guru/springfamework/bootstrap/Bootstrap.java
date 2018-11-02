@@ -1,7 +1,9 @@
 package guru.springfamework.bootstrap;
 
 import guru.springfamework.domain.Category;
+import guru.springfamework.domain.Customer;
 import guru.springfamework.repositories.CategoryRepository;
+import guru.springfamework.repositories.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -10,14 +12,21 @@ import org.springframework.stereotype.Component;
 public class Bootstrap implements CommandLineRunner {
 
     private CategoryRepository categoryRepository;
+    private CustomerRepository customerRepository;
 
-    public Bootstrap(CategoryRepository categoryRepository) {
+    public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
         this.categoryRepository = categoryRepository;
+        this.customerRepository = customerRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
 
+        initCategoryData();
+        initCustomerData();
+    }
+
+    private void initCategoryData() {
         Category fruits = new Category();
         fruits.setName("Fruits");
 
@@ -39,7 +48,36 @@ public class Bootstrap implements CommandLineRunner {
         categoryRepository.save(exotic);
         categoryRepository.save(nuts);
 
-        System.out.println("Data loaded ... " + categoryRepository.count());
+        System.out.println("Category Data loaded ... " + categoryRepository.count());
+    }
 
+    private void initCustomerData() {
+        Customer flash = new Customer();
+        flash.setFirstName("Flash");
+        flash.setLastName("Gordon");
+
+        Customer robbie = new Customer();
+        robbie.setFirstName("Robbie");
+        robbie.setLastName("Williams");
+
+        Customer tom = new Customer();
+        tom.setFirstName("Tom");
+        tom.setLastName("Cruise");
+
+        Customer arnold = new Customer();
+        arnold.setFirstName("Arnold");
+        arnold.setLastName("Schwarzenegger");
+
+        Customer rocky = new Customer();
+        rocky.setFirstName("Rocky");
+        rocky.setLastName("Balboa");
+
+        customerRepository.save(flash);
+        customerRepository.save(robbie);
+        customerRepository.save(tom);
+        customerRepository.save(arnold);
+        customerRepository.save(rocky);
+
+        System.out.println("Customer Data loaded ... " + customerRepository.count());
     }
 }
