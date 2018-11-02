@@ -1,5 +1,6 @@
 package guru.springfamework.controllers.v1;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import guru.springfamework.api.v1.model.CustomerDTO;
 import guru.springfamework.service.CustomerService;
 import org.junit.Before;
@@ -17,6 +18,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -75,6 +77,37 @@ public class CustomerControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName", equalTo("Tom")));
+    }
+
+    @Test
+    public void createNewCustomer() throws Exception {
+
+        CustomerDTO customer = new CustomerDTO();
+        customer.setFirstName("Tom");
+        customer.setLastName("Cruise");
+
+        CustomerDTO returnedCustomerDto = new CustomerDTO();
+        returnedCustomerDto.setFirstName(customer.getFirstName());
+        returnedCustomerDto.setLastName(customer.getLastName());
+        returnedCustomerDto.setCustomerUrl("/api/v1/customers/1");
+
+        when(customerService.createNewCustomer(customer)).thenReturn(returnedCustomerDto);
+
+        mockMvc.perform(post("/api/v1/customers/")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(asJsonString(customer)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.firstName", equalTo("Tom")))
+                .andExpect(jsonPath("$.lastName", equalTo("Cruise")))
+                .andExpect(jsonPath("$.customer_url", equalTo("/api/v1/customers/1"))); //Look at CustomerDTO and @JsonProperty("customer_url")
+    }
+
+    private static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
