@@ -83,7 +83,7 @@ public class CustomerServiceImpl implements CustomerService {
 
                     return returnDTO;
                 })
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
