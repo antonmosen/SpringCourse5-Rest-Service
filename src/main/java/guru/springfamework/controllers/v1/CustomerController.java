@@ -32,28 +32,24 @@ public class CustomerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDTO createNewCustomer(@RequestBody CustomerDTO customerDTO) {
-
         return customerService.createNewCustomer(customerDTO);
     }
 
     @GetMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDTO getCustomerById(@PathVariable Long id) {
-
         return customerService.getCustomerById(id);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDTO updateCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
-
         return customerService.saveCustomerDTO(id, customerDTO);
     }
 
     @PatchMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDTO patchCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
-
         return customerService.patchCustomer(id, customerDTO);
     }
 
