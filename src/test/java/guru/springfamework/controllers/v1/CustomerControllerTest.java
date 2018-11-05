@@ -3,6 +3,7 @@ package guru.springfamework.controllers.v1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import guru.springfamework.api.v1.model.CustomerDTO;
 import guru.springfamework.service.CustomerService;
+import guru.springfamework.service.ResourceNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -41,7 +42,9 @@ public class CustomerControllerTest {
         //Not needed since we are doing @InjectMocks
 //        customerController = new CustomerController(customerService);
 
-        mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(customerController)
+                .setControllerAdvice(new RestResponseEntityExceptionHandler()) // Needed for custom exceptionhandling. controlleradvice.
+                .build();
     }
 
     @Test
@@ -158,6 +161,17 @@ public class CustomerControllerTest {
 
         verify(customerService).deleteCustomerById(anyLong());
     }
+
+    @Test
+    public void testGetCustomerByByIdNotFound() throws Exception {
+
+        when(customerService.getCustomerById(anyLong())).thenThrow(ResourceNotFoundException.class);
+
+        mockMvc.perform(get(getCustomerUrlWithId(100L))
+        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
 
     private static String asJsonString(final Object obj) {
         try {
