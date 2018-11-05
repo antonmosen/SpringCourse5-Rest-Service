@@ -4,9 +4,12 @@ package guru.springfamework.controllers.v1;
 import guru.springfamework.api.v1.model.CategoryDTO;
 import guru.springfamework.api.v1.model.CategoryListDTO;
 import guru.springfamework.service.CategoryService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@Api(description = "Custom controller for Category") //@Api is swagger annotation for documentation.
 @RestController //@RestController contains @Controller and @ResponseBody. No need for ResponseEntity in methods.
 //ReponseEntity can be used for more control.
 @RequestMapping(CategoryController.BASE_URL)
@@ -23,12 +26,14 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    @ApiOperation(value = "This will get a list of categories", notes = "Some notes1") //@ApiOperation is swagger annotation for documentation
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public CategoryListDTO getAllCategories() {
         return new CategoryListDTO(categoryService.getAllCategories());
     }
 
+    @ApiOperation(value = "This will get category by its name", notes = "Some notes1") //@ApiOperation is swagger annotation for documentation
     @GetMapping("{name}")
     @ResponseStatus(HttpStatus.OK)
     public CategoryDTO getCategoriesByName(@PathVariable String name) {
