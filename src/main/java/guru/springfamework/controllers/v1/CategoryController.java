@@ -5,16 +5,16 @@ import guru.springfamework.api.v1.model.CategoryDTO;
 import guru.springfamework.api.v1.model.CategoryListDTO;
 import guru.springfamework.service.CategoryService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController //@RestController contains @Controller and @ResponseBody. No need for ResponseEntity in methods.
+//ReponseEntity can be used for more control.
 @RequestMapping(CategoryController.BASE_URL)
 public class CategoryController {
 
+    /*
+     * We do not put this in propertiesfile since we have to bring up spring context in out tests.
+     * */
     public static final String BASE_URL = "/api/v1/categories/";
 
     private final CategoryService categoryService;
@@ -24,14 +24,22 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<CategoryListDTO> getAllCategories() {
-        return new ResponseEntity<>(
-                new CategoryListDTO(categoryService.getAllCategories()), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryListDTO getAllCategories() {
+        return new CategoryListDTO(categoryService.getAllCategories());
     }
 
     @GetMapping("{name}")
-    public ResponseEntity<CategoryDTO> getCategoriesByName(@PathVariable String name) {
-        return new ResponseEntity<>(
-                categoryService.getCategoryByName(name), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryDTO getCategoriesByName(@PathVariable String name) {
+        return categoryService.getCategoryByName(name);
     }
 }
+
+//Old method implementation.
+
+//    @GetMapping("{name}")
+//    public ResponseEntity<CategoryDTO> getCategoriesByName(@PathVariable String name) {
+//        return new ResponseEntity<>(
+//                categoryService.getCategoryByName(name), HttpStatus.OK);
+//    }
