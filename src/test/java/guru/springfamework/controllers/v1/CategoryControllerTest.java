@@ -23,7 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class CategoryControllerTest {
 
-    private static final String API_V1_CATEGORIES = "/api/v1/categories/";
     private static final String NAME = "Jim";
 
     @Mock
@@ -60,7 +59,7 @@ public class CategoryControllerTest {
 
         when(categoryService.getAllCategories()).thenReturn(categoryDTOList);
 
-        mockMvc.perform(get(API_V1_CATEGORIES)
+        mockMvc.perform(get(getCategoryUrl())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.categories", hasSize(2))); // $-sign is the root and we are searching for categories.
@@ -74,9 +73,13 @@ public class CategoryControllerTest {
 
         when(categoryService.getCategoryByName(NAME)).thenReturn(category);
 
-        mockMvc.perform(get(API_V1_CATEGORIES+NAME)
+        mockMvc.perform(get(getCategoryUrl() + NAME)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo(NAME)));
+    }
+
+    public String getCategoryUrl() {
+        return CategoryController.BASE_URL;
     }
 }
