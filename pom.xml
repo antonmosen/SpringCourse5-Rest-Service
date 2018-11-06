@@ -9,8 +9,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>mvc-rest-app</module>
         <module>restmodel</module>
+        <module>mvc-rest-app</module>
     </modules>
 
     <name>mvc-rest-parent</name>

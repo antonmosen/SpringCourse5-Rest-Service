@@ -1,12 +1,11 @@
 package guru.springfamework.controllers.v1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import guru.springfamework.api.v1.model.CustomerDTO;
-import guru.springfamework.controllers.v1.CustomerController;
-import guru.springfamework.controllers.v1.RestResponseEntityExceptionHandler;
+import guru.springfamework.model.CustomerDTO;
 import guru.springfamework.service.CustomerService;
 import guru.springfamework.service.ResourceNotFoundException;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -98,7 +97,7 @@ public class CustomerControllerTest {
         returnedCustomerDto.setLastName(customer.getLastName());
         returnedCustomerDto.setCustomerUrl(getCustomerUrlWithId(1L));
 
-        when(customerService.createNewCustomer(customer)).thenReturn(returnedCustomerDto);
+        when(customerService.createNewCustomer(any())).thenReturn(returnedCustomerDto);
 
         mockMvc.perform(post(getCustomerUrlWithoutId())
                 .accept(MediaType.APPLICATION_JSON)
@@ -107,7 +106,7 @@ public class CustomerControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstName", equalTo("Tom")))
                 .andExpect(jsonPath("$.lastName", equalTo("Cruise")))
-                .andExpect(jsonPath("$.customer_url", equalTo(getCustomerUrlWithId(1L)))); //Look at CustomerDTO and @JsonProperty("customer_url")
+                .andExpect(jsonPath("$.customerUrl", equalTo(getCustomerUrlWithId(1L)))); //Look at CustomerDTO and @JsonProperty("customer_url")
     }
 
     @Test
@@ -132,8 +131,7 @@ public class CustomerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName", equalTo("Tom")))
                 .andExpect(jsonPath("$.lastName", equalTo("Cruise")))
-                .andExpect(jsonPath("$.customer_url", equalTo(getCustomerUrlWithId(1L))));
-
+                .andExpect(jsonPath("$.customerUrl", equalTo(getCustomerUrlWithId(1L))));
     }
 
     @Test
@@ -157,7 +155,7 @@ public class CustomerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName", equalTo("Tom")))
                 .andExpect(jsonPath("$.lastName", equalTo("Cruise")))
-                .andExpect(jsonPath("$.customer_url", equalTo(getCustomerUrlWithId(1L))));
+                .andExpect(jsonPath("$.customerUrl", equalTo(getCustomerUrlWithId(1L))));
     }
 
     @Test

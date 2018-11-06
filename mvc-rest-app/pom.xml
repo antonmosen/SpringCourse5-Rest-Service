@@ -14,6 +14,11 @@
 
     <dependencies>
         <dependency>
+            <artifactId>mvc-rest-model</artifactId>  <!-- local dependency-->
+            <version>1.0-SNAPSHOT</version>
+            <groupId>guru.springfamework</groupId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>

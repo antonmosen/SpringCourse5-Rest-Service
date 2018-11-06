@@ -1,7 +1,7 @@
 package guru.springfamework.controllers.v1;
 
-import guru.springfamework.api.v1.model.CustomerDTO;
-import guru.springfamework.api.v1.model.CustomerListDTO;
+import guru.springfamework.model.CustomerDTO;
+import guru.springfamework.model.CustomerListDTO;
 import guru.springfamework.service.CustomerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +30,10 @@ public class CustomerController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public CustomerListDTO getAllCustomers() {
-        return new CustomerListDTO(customerService.getAllCustomers());
+
+        CustomerListDTO customerListDTO = new CustomerListDTO();
+        customerListDTO.getCustomers().addAll(customerService.getAllCustomers());
+        return customerListDTO;
     }
 
     @ApiOperation(value = "Create new customer", notes = "Some notes2") //@ApiOperation is swagger annotation for documentation
