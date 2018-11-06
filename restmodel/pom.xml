@@ -31,7 +31,7 @@
                 </executions>
                 <configuration>
                     <!-- The package of your generated sources -->
-                    <packageName>guru.springfamework.model</packageName>
+                    <packageName>guru.springfamework.model</packageName> <!--made up location in target cataloge-->
                     <sources>
                         <source>src/main/resources/xsd</source>
                     </sources>
