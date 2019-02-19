@@ -65,7 +65,7 @@
             <groupId>org.codehaus.woodstox</groupId>            &lt;!&ndash; Enable xml response instead of JSON &ndash;&gt;
             <artifactId>woodstox-core-asl</artifactId>
             <version>4.4.1</version>
-        </dependency>-->
+         </dependency>-->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-jdk8</artifactId>
